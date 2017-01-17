@@ -1,0 +1,29 @@
+# a comment
+; also a comment
+entry1=value
+entry2="a string"
+random=1234
+
+# line feeds are ignored/retained
+
+color=pink
+; random line feed
+
+pi=3.14159
+
+tobe="or not to be"
+
+			; comments can appear anywhere in a line, key/value pairs must
+			; start in line 0.
+
+somevalue=hootenanny
+richardiii="Now's the winter of our discontent made glorious summer"
+; comments after a key/value pair will also be lost after processing
+; give comments their own line 
+
+# use static_cast to read this value into a double type variable
+adouble=252.34345
+
+[also a comment]
+[ even this
+
