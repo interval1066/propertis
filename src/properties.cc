@@ -179,9 +179,6 @@ Properties::Write(const char* file)
 void
 Properties::OpenPropFile(const char* file)
 {
-#ifdef _REENTRANT
-	cout << "---------------> reentrant defined" << endl;
-#endif
 	// mode is read/write unless explicately set
 	_propdata._file = string(file);
 	if(!_propdata._file.empty()) {
