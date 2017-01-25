@@ -99,7 +99,7 @@ namespace utils
 		}
 
 	public:
-		Properties(int);
+		explicit Properties(int);
 		Properties(const char*, int);
 		virtual ~Properties(void);
 

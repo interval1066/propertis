@@ -38,7 +38,7 @@ unless you have a specific need of course.
 
 TODO:
 Add bitmask processing to parse options rather than simple flags so I can
-add a few more oprions, like what to do when an option's default is used
+add a few more options, like what to do when an option's default is used
 (in the case the property doesn't exist as far as the application is
 concerned, should it be added or ignored- currently the option is automatically
 added.) Also need to track down a bug that sometimes occures when writing the

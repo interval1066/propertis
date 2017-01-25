@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <mutex>
 #include <properties.h>
+#include <iostream>
 
 using namespace std;
 using namespace utils;
@@ -35,9 +36,11 @@ Properties::process(ifstream& f)
 	while(getline(f, content)) {
 		try {
 			parse(content);
+
 			if(content.length() > 0) {
 				if(content.find("=") == string::npos)
 					throw new BADKEY_EXCEPTION;
+
 				else {
 					string key = content.substr(0, content.find_first_of("="));
 					string value = content.substr(content.find_first_of("=") + 1, content.length());
@@ -45,6 +48,9 @@ Properties::process(ifstream& f)
 
 					if((!key.empty()) && str_alnum(key)) {
 						pair<string, string> prop_entry(key, value);
+#ifdef _REENTRANT
+						lock_guard<mutex> guard(_propdata._proplock);
+#endif
 						_propdata._props.insert(prop_entry);
 					}
 				}
@@ -116,9 +122,6 @@ Properties::Write(const char* file)
 	}
 	size_t found;
 	string content;
-#ifdef _REENTRANT
-	lock_guard<mutex> guard(_propdata._proplock);
-#endif
 	MAP temp(_propdata._props);
 
 	_propdata._file = string(file);
@@ -126,9 +129,13 @@ Properties::Write(const char* file)
 	ifstream filestream(_propdata._file.c_str());
 
 	ofstream propout("temp", ios::trunc | ios::out);
+#ifdef _REENTRANT
+	lock_guard<mutex> guard(_propdata._proplock);
+#endif
 	if(filestream.is_open()) {
 		while(getline(filestream, content)) {
 			found = content.find_first_of("=");
+
 			if(found != string::npos) {
 				string key = content.substr(0, found);
 				if(str_alnum(key)) {
@@ -147,6 +154,7 @@ Properties::Write(const char* file)
 			else
 				propout << content << '\n';
 		}
+
 		for(auto& x: _propdata._props) {
 			if(!should_quote(x.second)) 
 				propout << x.first << "=" << '\"' << x.second << '\"' << '\n';
@@ -171,13 +179,14 @@ Properties::Write(const char* file)
 void
 Properties::OpenPropFile(const char* file)
 {
-	// mode is read/write unless explicately set
 #ifdef _REENTRANT
-	lock_guard<mutex> guard(_propdata._proplock);
+	cout << "---------------> reentrant defined" << endl;
 #endif
+	// mode is read/write unless explicately set
 	_propdata._file = string(file);
 	if(!_propdata._file.empty()) {
 		_propdata._file = string(file);
+
 		ifstream filestream(_propdata._file.c_str());
 
 		if(filestream.is_open()) {
@@ -190,14 +199,15 @@ Properties::OpenPropFile(const char* file)
 void
 Properties::Set(const string& key, const string& value)
 {
-#ifdef _REENTRANT
-	lock_guard<std::mutex> guard(_propdata._proplock);
-#endif
 	if(_propdata._mode == PRP_READONLY) {
 		throw new READONLY_EXCEPTION;
 		return;
 	}
+
 	MAP::const_iterator FOUND = _propdata._props.find(key);
+#ifdef _REENTRANT
+	lock_guard<std::mutex> guard(_propdata._proplock);
+#endif
  	if(FOUND != _propdata._props.end())
 		_propdata._props.erase(key);
 	pair<string, string> prop_entry(key, value);
@@ -208,9 +218,6 @@ Value
 Properties::Get(const string& key, const string& def)
 {
 	string value;
-#ifdef _REENTRANT
-	lock_guard<mutex> guard(_propdata._proplock);
-#endif
 	if(_propdata._mode == PRP_WRITEONLY) {
 		throw new WRITEONLY_EXCEPTION;
 		value = "";
@@ -222,6 +229,9 @@ Properties::Get(const string& key, const string& def)
 		return { value };
 	}
 
+#ifdef _REENTRANT
+	lock_guard<mutex> guard(_propdata._proplock);
+#endif
 	MAP::const_iterator FOUND = _propdata._props.find(key);
 	if(FOUND != _propdata._props.end())
 		value = FOUND->second;
