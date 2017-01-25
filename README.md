@@ -33,8 +33,9 @@ included example be sure to edit the PRPFILE location to the actual location
 of the sample properties (you need to put it somewhere, make sure to reflect
 this in the use example.)
 
-I really don't think a properties object should be more complicated than this,
-unless you have a specific need of course.
+I really don't think a properties object should be more complicated than
+this, unless you have a specific need of course. Used in my never-ending
+hexlab- the hexidecimal abattoir, effort.
 
 WHY "PROPERTIS"?
 Becuase I mispelled "properties" when I was setting up the repository and
