@@ -36,6 +36,11 @@ this in the use example.)
 I really don't think a properties object should be more complicated than this,
 unless you have a specific need of course.
 
+WHY "PROPERTIS"?
+Becuase I mispelled "properties" when I was setting up the repository and
+really didn't have the stomach to sit around for 5-8 minutes correcting
+the issue with github.
+
 TODO:
 Add bitmask processing to parse options rather than simple flags so I can
 add a few more options, like what to do when an option's default is used
