@@ -61,7 +61,7 @@ namespace utils
 			T convertedValue;
 
 			if (ss >> convertedValue) return convertedValue;
-				else throw new CONVERSION_EXCEPTION;
+				else throw CONVERSION_EXCEPTION;
 		}
 	};
 

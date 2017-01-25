@@ -44,11 +44,7 @@ the issue with github.
 TODO:
 Too many throw macros. I implemented the throwable objects as macros to simplify
 them; created a whole butt load of 'em and I use less than half. OR I can retain
-them in case I add to the code and need them (propbably won't happen). Also throw
-tham as a new object, should be thrown on the stack (look out for memory leaks,
-especially if used as part of library.)
-
-They should be thrown without the 'new' operator.
+them in case I add to the code and need them (propbably won't happen).
 
 Add bitmask processing to parse options rather than simple flags so I can
 add a few more options, like what to do when an option's default is used

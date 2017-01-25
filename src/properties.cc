@@ -14,7 +14,7 @@ Properties::Properties(int mode)
 {
 	this->_propdata._mode = mode;
 	if(this->_propdata._mode == MODE::PRP_READONLY)
-		throw new BADMODE_EXCEPTION;
+		throw BADMODE_EXCEPTION;
 	this->_propdata._file.clear();
 }
 
@@ -39,7 +39,7 @@ Properties::process(ifstream& f)
 
 			if(content.length() > 0) {
 				if(content.find("=") == string::npos)
-					throw new BADKEY_EXCEPTION;
+					throw BADKEY_EXCEPTION;
 
 				else {
 					string key = content.substr(0, content.find_first_of("="));
@@ -117,7 +117,7 @@ void
 Properties::Write(const char* file)
 {
 	if(_propdata._mode == MODE::PRP_READONLY) {
-		throw new READONLY_EXCEPTION;
+		throw READONLY_EXCEPTION;
 		return;
 	}
 	size_t found;
@@ -171,7 +171,7 @@ Properties::Write(const char* file)
 			propout << x.first << "=" << x.second << '\n';
 	}
 	if(rename("./temp", _propdata._file.c_str()) != 0)
-		throw new WRITE_EXCEPTION;
+		throw WRITE_EXCEPTION;
 
 	propout.close();
 }
@@ -197,7 +197,7 @@ void
 Properties::Set(const string& key, const string& value)
 {
 	if(_propdata._mode == PRP_READONLY) {
-		throw new READONLY_EXCEPTION;
+		throw READONLY_EXCEPTION;
 		return;
 	}
 
@@ -216,12 +216,12 @@ Properties::Get(const string& key, const string& def)
 {
 	string value;
 	if(_propdata._mode == PRP_WRITEONLY) {
-		throw new WRITEONLY_EXCEPTION;
+		throw WRITEONLY_EXCEPTION;
 		value = "";
 		return { value };
 	}
 	if(_propdata._file.empty()) {
-		throw new NOKEY_EXCEPTION;
+		throw NOKEY_EXCEPTION;
 		value = "";
 		return { value };
 	}
