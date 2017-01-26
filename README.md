@@ -33,6 +33,9 @@ included example be sure to edit the PRPFILE location to the actual location
 of the sample properties (you need to put it somewhere, make sure to reflect
 this in the use example.)
 
+Should (does) work as single threaded model code as well, remark out the
+"add_compile_options(-pthread)" line in the CMakeLists.txt file.
+
 I really don't think a properties object should be more complicated than
 this, unless you have a specific need of course. Used in my never-ending
 hexlab- the hexidecimal abattoir, effort.
