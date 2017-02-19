@@ -22,11 +22,9 @@ typedef struct PROPDATA
 {
 	MAP _props;
 #ifdef _REENTRANT
-	int _mode;
 	std::mutex _proplock;
-#else
-	int _mode;
 #endif
+	int _mode;
 	std::string _file;
 } PROPDATA;
 
