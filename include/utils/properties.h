@@ -1,6 +1,10 @@
 #ifndef PROPERTIES_H_
 #define PROPERTIES_H_
 
+#if __cplusplus <= 199711L
+#error This code needs at least a C++11 compliant compiler
+#endif
+
 #include <unordered_map>
 #include <string>
 #include <stdexcept>
@@ -18,7 +22,7 @@ typedef struct PROPDATA
 {
 	MAP _props;
 #ifdef _REENTRANT
-	volatile int _mode;
+	int _mode;
 	std::mutex _proplock;
 #else
 	int _mode;
