@@ -45,6 +45,8 @@ Becuase I mispelled "properties" when I was setting up the repository and
 really didn't have the stomach to sit around for 5-8 minutes correcting
 the issue with github.
 
+Fixed: string quote-enclosed string values now return in full.
+
 TODO:
 Too many throw macros. I implemented the throwable objects as macros to simplify
 them; created a whole butt load of 'em and I use less than half. OR I can retain

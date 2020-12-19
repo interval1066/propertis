@@ -11,6 +11,8 @@
 #include <algorithm>
 #include <mutex>
 #include <sstream>
+#include <iostream>
+#include <typeinfo>
 
 enum MODE
 { PRP_WRITEONLY, PRP_READONLY, PRP_READWRITE };
@@ -52,7 +54,7 @@ namespace utils
 		const char* what() const throw() { return _msg.c_str(); }
 	};
 
-	struct Value
+struct Value
 	{
 		std::string _value;
 
@@ -60,12 +62,15 @@ namespace utils
 		operator T() const
 		{
 			std::stringstream ss(_value);
+         if constexpr(std::is_same_v<T, std::string>)
+            return ss.str();
+
 			T convertedValue;
 
 			if (ss >> convertedValue) return convertedValue;
 				else throw CONVERSION_EXCEPTION;
 		}
-	};
+   };
 
 	class Properties
 	{
@@ -112,6 +117,7 @@ namespace utils
 		void OpenPropFile(const char*);
 		void Set(const std::string&, const std::string&);
 		Value Get(const std::string&, const std::string&);
+      // test get method alternative
 	};
 }
 
