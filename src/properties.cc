@@ -164,7 +164,7 @@ Properties::Write(const char* file)
 			_propdata._props.swap(temp);
 		}
 		filestream.close();
-		remove(_propdata._file.c_str());
+		OpenPropFile(file);
 	}
 	else {
 		for(auto& x: _propdata._props)

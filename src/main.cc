@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <memory>
 #include <properties.h>
+#include <variant>
 
 using namespace utils;
 using namespace std;
@@ -30,12 +31,15 @@ main(int argc, char** argv)
 		// becuase we didn't specify a properties file. No file, no properties db.
 		// cout << "The value of pi is approximately " << p->Get("p1", 4.0) << endl;
 		p->OpenPropFile(PRPFILE);
-      string richard = p->Get("richardiii", "default");
-      cout << static_cast<string>(p->Get("richardiii", "default")) << endl;
+      auto richard = static_cast<string>(p->Get("richardiii", "default"));
+      cout << richard << endl;
       cout << static_cast<float>(p->Get("pi", "4.4")) << endl;
       float boo = p->Get("pi", "4.4");
       cout << boo * boo << endl;
+      auto poo = static_cast<int>(p->Get("nullvalue", "44"));
+		cout << "---------------------------" << endl;
 		p->Write(PRPFILE);
+		p->dump();
 	}
 	catch (PropException* e) {
 		cout << e->what() << endl;
