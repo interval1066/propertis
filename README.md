@@ -40,6 +40,8 @@ intended to be super light weight for embedded projects, and it is. For the
 included example be sure to edit the PRPFILE location to the actual location
 of the sample properties.
 
+To build the example just do a cmake and a make.
+
 Should (does) work as single threaded model code as well, remark out the
 "add_compile_options(-pthread)" line in the CMakeLists.txt file.
 
@@ -60,6 +62,7 @@ Build log:
 Latest:
 "Value" class now returns a string property as a full string.
 Properties are retained after a write, I cleared the hashmap
-after a write for some reason.
+after a write for some reason. Needs much more intense threaded
+testing.
 
 
